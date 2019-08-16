@@ -109,8 +109,7 @@ public class FTPclient {
             int count = 0;
             int total = 0;
             
-            while (total < file_size  && count != -1){
-                count = file_input_s.read(buffer, 0, buffer.length);
+            while (total < file_size  && (count = file_input_s.read(buffer, 0, buffer.length)) != -1){
                 total += count;
                 data_output_s.write(buffer, 0, count);
                 data_output_s.flush();
