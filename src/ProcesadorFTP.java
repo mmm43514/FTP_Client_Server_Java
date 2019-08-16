@@ -98,13 +98,14 @@ public class ProcesadorFTP {
             byte[] buffer = new byte[4096];
             int count;
             int total = 0;
-            int remaining  = file_size;
+            int remaining = file_size;
             
-            while( (count = data_input_s.read(buffer,0,Math.min(buffer.length, remaining))) > 0 && total < file_size){
+            while( (count = data_input_s.read(buffer, 0, Math.min(buffer.length, remaining))) > 0 && total < file_size){
                 remaining -= count;
                 file_output_s.write(buffer, 0, count);
-                file_output_s.flush();
                 total += count;
+                System.out.println("Leido: "+count+"\t Total: "+total);
+                System.out.println("total mayor que file size"+total+" > "+file_size+ " Remaining: "+remaining);
             }
              
             file_output_s.close();
@@ -139,6 +140,8 @@ public class ProcesadorFTP {
                 total += count;
                 data_output_s.write(buffer, 0, count);
                 data_output_s.flush();
+                System.out.println("Leido: "+count+"\t Total: "+total);
+                
             }
             
             file_input_s.close();

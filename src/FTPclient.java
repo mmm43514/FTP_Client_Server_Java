@@ -1,3 +1,4 @@
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileOutputStream;
@@ -103,18 +104,15 @@ public class FTPclient {
             outPrinter.flush();
             
             file_input_s = new FileInputStream(file);
+            BufferedInputStream buffered_file = new BufferedInputStream(file_input_s);
+            DataInputStream d_input_stream = new DataInputStream(buffered_file);
         
-            byte[] buffer = new byte[4096];
-        
-            int count = 0;
-            int total = 0;
+            byte[] buffer = new byte[(int) file_size];
             
-            while (total < file_size  && count != -1){
-                count = file_input_s.read(buffer, 0, buffer.length);
-                total += count;
-                data_output_s.write(buffer, 0, count);
-                data_output_s.flush();
-            }
+            d_input_stream.readFully(buffer, 0, buffer.length);
+            
+            data_output_s.write(buffer, 0, buffer.length);
+            data_output_s.flush();
             
             file_input_s.close();
             
